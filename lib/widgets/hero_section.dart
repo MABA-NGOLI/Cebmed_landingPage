@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class HeroSection extends StatelessWidget {
@@ -16,34 +16,36 @@ class HeroSection extends StatelessWidget {
   static const String _heroAccent = 'simple';
   static const String _heroTitlePart3 = 'et motivante';
   static const String _heroDescription1 =
-      'L\'assistant intélligent qui prend soin de votre sante.';
+      'L\'assistant intelligent qui prend soin de votre sante.';
   static const String _heroDescription2 =
       'Fini les oublis, automatisez votre suivi medical avec douceur et efficacite.';
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final isMobile = width < 600;
-    final isTablet = width >= 600 && width < 1024;
+    final isMobile = width < 700;
 
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1300),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 14 : 24, vertical: isMobile ? 18 : 28),
-          child: isTablet || isMobile
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 14 : 24,
+            vertical: isMobile ? 18 : 28,
+          ),
+          child: isMobile
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildLeft(context, width),
-                    SizedBox(height: isMobile ? 18 : 24),
+                    const SizedBox(height: 20),
                     _buildRight(width),
                   ],
                 )
               : Row(
                   children: [
-                    Expanded(flex: 12, child: _buildLeft(context, width)),
-                    const SizedBox(width: 20),
+                    Expanded(flex: 11, child: _buildLeft(context, width)),
+                    const SizedBox(width: 16),
                     Expanded(flex: 10, child: _buildRight(width)),
                   ],
                 ),
@@ -54,19 +56,19 @@ class HeroSection extends StatelessWidget {
 
   Widget _buildLeft(BuildContext context, double width) {
     final textTheme = Theme.of(context).textTheme;
-    final isMobile = width < 600;
-    final isTablet = width >= 600 && width < 1024;
+    final isMobile = width < 700;
+    final isTablet = width >= 700 && width < 1024;
 
-    final titleSize = isMobile ? 36.0 : (isTablet ? 44.0 : 54.0);
-    final bodySize = isMobile ? 15.0 : (isTablet ? 16.0 : 18.0);
+    final titleSize = isMobile ? 26.0 : (isTablet ? 34.0 : 48.0);
+    final bodySize = isMobile ? 13.0 : 16.0;
 
     final titleStyle = textTheme.displayLarge?.copyWith(
-          color: AppTheme.black,
+          color: const Color(0xFF21222A),
           height: 1.05,
           fontSize: titleSize,
         ) ??
         TextStyle(
-          color: AppTheme.black,
+          color: const Color(0xFF21222A),
           height: 1.05,
           fontSize: titleSize,
           fontWeight: FontWeight.w700,
@@ -75,7 +77,7 @@ class HeroSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: isMobile ? 8 : 24),
+        SizedBox(height: isMobile ? 8 : 16),
         Text(_heroTitlePart1, style: titleStyle),
         RichText(
           text: TextSpan(
@@ -87,11 +89,11 @@ class HeroSection extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: isMobile ? 14 : 22),
+        SizedBox(height: isMobile ? 16 : 22),
         Text(
           _heroDescription1,
           style: textTheme.titleMedium?.copyWith(
-            color: Colors.black54,
+            color: const Color(0xFF5D5F6A),
             fontWeight: FontWeight.w500,
             fontSize: bodySize,
           ),
@@ -100,27 +102,25 @@ class HeroSection extends StatelessWidget {
         Text(
           _heroDescription2,
           style: textTheme.titleMedium?.copyWith(
-            color: Colors.black54,
+            color: const Color(0xFF5D5F6A),
             fontWeight: FontWeight.w500,
             height: 1.35,
             fontSize: bodySize,
           ),
         ),
-        SizedBox(height: isMobile ? 20 : 34),
+        SizedBox(height: isMobile ? 20 : 30),
         ElevatedButton.icon(
           onPressed: onPrimaryCtaPressed,
-          icon: Icon(Icons.file_download_rounded, size: isMobile ? 18 : 20),
-          label: Text(isMobile ? 'Télécharger' : ctaLabel),
+          icon: Icon(Icons.apple, size: isMobile ? 18 : 20),
+          label: Text(isMobile ? 'Telecharger l\'App' : ctaLabel),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppTheme.primaryPink,
             foregroundColor: AppTheme.white,
-            elevation: 4,
+            elevation: 8,
             shadowColor: AppTheme.primaryPink.withValues(alpha: 0.35),
-            minimumSize: Size(0, isMobile ? 46 : 52),
-            padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 28, vertical: isMobile ? 12 : 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
+            minimumSize: Size(0, isMobile ? 48 : 54),
+            padding: EdgeInsets.symmetric(horizontal: isMobile ? 18 : 26, vertical: isMobile ? 12 : 16),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             textStyle: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
@@ -129,20 +129,19 @@ class HeroSection extends StatelessWidget {
   }
 
   Widget _buildRight(double width) {
-    final isMobile = width < 600;
-    final isTablet = width >= 600 && width < 1024;
+    final isMobile = width < 700;
+    final isTablet = width >= 700 && width < 1024;
 
-    return Center(
+    return Align(
+      alignment: Alignment.centerRight,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: isMobile ? 250 : (isTablet ? 340 : 460),
-          maxWidth: isMobile ? 360 : (isTablet ? 500 : 620),
+          maxHeight: isMobile ? 290 : (isTablet ? 380 : 470),
+          maxWidth: isMobile ? 390 : (isTablet ? 540 : 640),
         ),
-        child: Image.asset(
-          'assets/images/Cebmed_hero.png',
-          fit: BoxFit.contain,
-        ),
+        child: Image.asset('assets/images/Cebmed_hero.png', fit: BoxFit.contain),
       ),
     );
   }
 }
+

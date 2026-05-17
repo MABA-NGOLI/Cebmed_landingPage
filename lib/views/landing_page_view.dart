@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/assistant_section.dart';
 import '../widgets/features_section.dart';
 import '../widgets/hero_section.dart';
+import '../widgets/pricing_section.dart';
 
 class LandingPageView extends StatelessWidget {
   const LandingPageView({super.key});
 
-  static const String _ctaLabel = 'Télécharger l\'App';
+  static const String _ctaLabel = 'Telecharger l\'App';
 
   void _onPrimaryCtaPressed(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -20,13 +22,7 @@ class LandingPageView extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.white, AppTheme.softPink],
-          ),
-        ),
+        color: AppTheme.white,
         child: SafeArea(
           child: Column(
             children: [
@@ -44,6 +40,8 @@ class LandingPageView extends StatelessWidget {
                         onPrimaryCtaPressed: () => _onPrimaryCtaPressed(context),
                       ),
                       const FeaturesSection(),
+                      const AssistantSection(),
+                      const PricingSection(),
                     ],
                   ),
                 ),
@@ -110,7 +108,7 @@ class _TopNavigation extends StatelessWidget {
             onPressed: onPrimaryCtaPressed,
             icon: Icon(Icons.file_download_rounded, size: isMobile ? 14 : 16),
             label: Text(
-              isMobile ? 'Télécharger' : ctaLabel,
+              isMobile ? 'Telecharger' : ctaLabel,
               style: textTheme.bodyMedium?.copyWith(color: AppTheme.white),
             ),
             style: ElevatedButton.styleFrom(

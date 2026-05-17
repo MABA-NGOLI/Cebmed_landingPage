@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class FeaturesSection extends StatelessWidget {
@@ -26,7 +26,7 @@ class FeaturesSection extends StatelessWidget {
                 style: textTheme.headlineLarge?.copyWith(
                   color: AppTheme.black,
                   fontWeight: FontWeight.w700,
-                  fontSize: isMobile ? 28 : (isTablet ? 34 : 40),
+                  fontSize: isMobile ? 24 : (isTablet ? 30 : 36),
                 ),
               ),
               const SizedBox(height: 10),
@@ -36,7 +36,7 @@ class FeaturesSection extends StatelessWidget {
                 style: textTheme.titleMedium?.copyWith(
                   color: Colors.black54,
                   fontWeight: FontWeight.w500,
-                  fontSize: isMobile ? 14 : 18,
+                  fontSize: isMobile ? 13 : 16,
                 ),
               ),
               SizedBox(height: isMobile ? 18 : 28),
@@ -101,7 +101,7 @@ class _FeatureCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(isMobile ? 16 : 22, isMobile ? 16 : 22, isMobile ? 16 : 22, isMobile ? 16 : 20),
       decoration: BoxDecoration(
-        color: AppTheme.white,
+        color: AppTheme.primaryBlue.withValues(alpha: 0.35),
         borderRadius: BorderRadius.circular(isMobile ? 22 : 30),
       ),
       child: Column(
@@ -123,7 +123,7 @@ class _FeatureCard extends StatelessWidget {
             style: textTheme.titleLarge?.copyWith(
               color: const Color(0xFF222222),
               height: 1.2,
-              fontSize: isMobile ? 22 : 24,
+              fontSize: isMobile ? 18 : 21,
             ),
           ),
           const SizedBox(height: 10),
@@ -140,3 +140,9 @@ class _FeatureCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

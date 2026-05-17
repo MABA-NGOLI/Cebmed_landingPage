@@ -25,6 +25,8 @@ flutter:
     - assets/images/logo_text.png
     - assets/images/logo_two.png
     - assets/images/Cebmed_hero.png
+    - assets/images/Caregiver_mode.png
+    - assets/images/mockupthree.png
 
 
   fonts:
