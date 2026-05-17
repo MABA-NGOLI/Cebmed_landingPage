@@ -4,6 +4,8 @@ import '../widgets/assistant_section.dart';
 import '../widgets/features_section.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/pricing_section.dart';
+import '../widgets/social_section.dart';
+import '../widgets/app_download_section.dart';
 
 class LandingPageView extends StatelessWidget {
   const LandingPageView({super.key});
@@ -42,6 +44,8 @@ class LandingPageView extends StatelessWidget {
                       const FeaturesSection(),
                       const AssistantSection(),
                       const PricingSection(),
+                      const SocialSection(),
+                      const AppDownloadSection(),
                     ],
                   ),
                 ),
@@ -127,3 +131,8 @@ class _TopNavigation extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

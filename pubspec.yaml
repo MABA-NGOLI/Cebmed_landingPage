@@ -1,4 +1,4 @@
-name: landingpage_cebmed
+﻿name: landingpage_cebmed
 description: "Landing page Cebmed"
 publish_to: 'none'
 
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -25,9 +26,13 @@ flutter:
     - assets/images/logo_text.png
     - assets/images/logo_two.png
     - assets/images/Cebmed_hero.png
-    - assets/images/Caregiver_mode.png
+    - assets/images/Caregiver_Mode.png
     - assets/images/mockupthree.png
-
+    - assets/images/instagram-logo.png
+    - assets/images/logo-Googleplay.png
+    - assets/images/logo-Googleplay.png
+    - assets/images/logo_AppStore.png
+    - assets/images/App_Cebmed.png
 
   fonts:
     - family: Grandstander
