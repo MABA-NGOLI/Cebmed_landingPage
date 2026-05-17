@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'theme/app_theme.dart';
+import 'views/landing_page_view.dart';
 
 void main() {
   runApp(const CebmedApp());
@@ -11,17 +13,9 @@ class CebmedApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text(
-            'Bienvenue sur Cebmed',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      title: 'Cebmed',
+      theme: AppTheme.light(),
+      home: const LandingPageView(),
     );
   }
 }
