@@ -36,7 +36,7 @@ class PricingSection extends StatelessWidget {
               if (isMobile)
                 Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 520),
+                    constraints: const BoxConstraints(maxWidth: 460),
                     child: Column(
                       children: [
                         _FreePlanCard(isCompact: isCompact),

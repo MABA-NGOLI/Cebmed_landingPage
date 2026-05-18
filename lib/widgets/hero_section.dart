@@ -16,7 +16,7 @@ class HeroSection extends StatelessWidget {
   static const String _heroAccent = 'simple';
   static const String _heroTitlePart3 = 'et motivante';
   static const String _heroDescription1 =
-      'L\'assistant intelligent qui prend soin de votre sante.';
+      'L\'assistant intelligent qui prend soin de votre santé.';
   static const String _heroDescription2 =
       'Fini les oublis, automatisez votre suivi medical avec douceur et efficacite.';
 
@@ -58,9 +58,10 @@ class HeroSection extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final isMobile = width < 700;
     final isTablet = width >= 700 && width < 1024;
+    final isTinyMobile = width < 390;
 
-    final titleSize = isMobile ? 26.0 : (isTablet ? 34.0 : 48.0);
-    final bodySize = isMobile ? 13.0 : 16.0;
+    final titleSize = isMobile ? (isTinyMobile ? 22.0 : 26.0) : (isTablet ? 34.0 : 48.0);
+    final bodySize = isMobile ? (isTinyMobile ? 12.0 : 13.0) : 16.0;
 
     final titleStyle = textTheme.displayLarge?.copyWith(
           color: const Color(0xFF21222A),
@@ -131,13 +132,14 @@ class HeroSection extends StatelessWidget {
   Widget _buildRight(double width) {
     final isMobile = width < 700;
     final isTablet = width >= 700 && width < 1024;
+    final isTinyMobile = width < 390;
 
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: isMobile ? 290 : (isTablet ? 380 : 470),
-          maxWidth: isMobile ? 390 : (isTablet ? 540 : 640),
+          maxHeight: isMobile ? (isTinyMobile ? 250 : 290) : (isTablet ? 380 : 470),
+          maxWidth: isMobile ? (isTinyMobile ? 330 : 390) : (isTablet ? 540 : 640),
         ),
         child: Image.asset('assets/images/Cebmed_hero.png', fit: BoxFit.contain),
       ),

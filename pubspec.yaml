@@ -33,6 +33,7 @@ flutter:
     - assets/images/logo-Googleplay.png
     - assets/images/logo_AppStore.png
     - assets/images/App_Cebmed.png
+    - assets/images/Instagram_Cebmed.png
 
   fonts:
     - family: Grandstander

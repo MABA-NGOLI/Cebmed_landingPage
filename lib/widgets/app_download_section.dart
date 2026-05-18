@@ -18,17 +18,18 @@ class AppDownloadSection extends StatelessWidget {
         final w = constraints.maxWidth;
         final isMobile = w < 900;
         final isTablet = w >= 900 && w < 1200;
+        final cardMaxWidth = isMobile ? w * 0.92 : (isTablet ? w * 0.88 : 1120.0);
 
         return Container(
           width: double.infinity,
           color: const Color(0xFFF7F7F8),
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 14 : 24,
-            vertical: isMobile ? 20 : 32,
+            horizontal: isMobile ? 12 : 20,
+            vertical: isMobile ? 18 : 28,
           ),
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1320),
+              constraints: BoxConstraints(maxWidth: cardMaxWidth),
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(
@@ -46,8 +47,8 @@ class AppDownloadSection extends StatelessWidget {
                   ),
                 ),
                 child: isMobile
-                    ? _mobileLayout(context)
-                    : _desktopLayout(context, compact: isTablet),
+                    ? _mobileLayout(context, width: w)
+                    : _desktopLayout(context, compact: isTablet, width: w),
               ),
             ),
           ),
@@ -56,8 +57,15 @@ class AppDownloadSection extends StatelessWidget {
     );
   }
 
-  Widget _desktopLayout(BuildContext context, {required bool compact}) {
+  Widget _desktopLayout(
+    BuildContext context, {
+    required bool compact,
+    required double width,
+  }) {
     final textTheme = Theme.of(context).textTheme;
+    final appBadgeWidth = compact ? (width * 0.24).clamp(220.0, 290.0) : 340.0;
+    final logoTwoWidth = compact ? (width * 0.17).clamp(130.0, 180.0) : 220.0;
+    final phoneHeight = compact ? (width * 0.30).clamp(250.0, 350.0) : 420.0;
 
     return Column(
       children: [
@@ -90,7 +98,7 @@ class AppDownloadSection extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: Image.asset(
                   'assets/images/logo_two.png',
-                  width: compact ? 180 : 220,
+                  width: logoTwoWidth,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -104,7 +112,7 @@ class AppDownloadSection extends StatelessWidget {
                     onTap: onAppStoreTap,
                     child: Image.asset(
                       'assets/images/logo_AppStore.png',
-                      width: compact ? 280 : 340,
+                      width: appBadgeWidth,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -113,7 +121,7 @@ class AppDownloadSection extends StatelessWidget {
                     onTap: onGooglePlayTap,
                     child: Image.asset(
                       'assets/images/logo-Googleplay.png',
-                      width: compact ? 280 : 340,
+                      width: appBadgeWidth,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -126,7 +134,7 @@ class AppDownloadSection extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Image.asset(
                   'assets/images/App_Cebmed.png',
-                  height: compact ? 350 : 420,
+                  height: phoneHeight,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -137,8 +145,11 @@ class AppDownloadSection extends StatelessWidget {
     );
   }
 
-  Widget _mobileLayout(BuildContext context) {
+  Widget _mobileLayout(BuildContext context, {required double width}) {
     final textTheme = Theme.of(context).textTheme;
+    final badgeWidth = (width * 0.56).clamp(185.0, 250.0);
+    final logoWidth = (width * 0.28).clamp(92.0, 130.0);
+    final phoneHeight = (width * 0.50).clamp(150.0, 230.0);
 
     return Column(
       children: [
@@ -167,7 +178,7 @@ class AppDownloadSection extends StatelessWidget {
           onTap: onAppStoreTap,
           child: Image.asset(
             'assets/images/logo_AppStore.png',
-            width: 250,
+            width: badgeWidth,
             fit: BoxFit.contain,
           ),
         ),
@@ -176,7 +187,7 @@ class AppDownloadSection extends StatelessWidget {
           onTap: onGooglePlayTap,
           child: Image.asset(
             'assets/images/logo-Googleplay.png',
-            width: 250,
+            width: badgeWidth,
             fit: BoxFit.contain,
           ),
         ),
@@ -189,7 +200,7 @@ class AppDownloadSection extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: Image.asset(
                   'assets/images/logo_two.png',
-                  width: 130,
+                  width: logoWidth,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -199,7 +210,7 @@ class AppDownloadSection extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Image.asset(
                   'assets/images/App_Cebmed.png',
-                  height: 230,
+                  height: phoneHeight,
                   fit: BoxFit.contain,
                 ),
               ),

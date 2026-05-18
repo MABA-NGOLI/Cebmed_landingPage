@@ -39,56 +39,56 @@ class AppTheme {
         // GRANDSTANDER
         displayLarge: TextStyle(
           fontFamily: 'Grandstander',
-          fontSize: 54,
+          fontSize: 50,
           fontWeight: FontWeight.w700,
         ),
 
         headlineLarge: TextStyle(
           fontFamily: 'Grandstander',
-          fontSize: 40,
+          fontSize: 36,
           fontWeight: FontWeight.w700,
         ),
 
         headlineMedium: TextStyle(
           fontFamily: 'Grandstander',
-          fontSize: 32,
+          fontSize: 28,
           fontWeight: FontWeight.w600,
         ),
 
         headlineSmall: TextStyle(
           fontFamily: 'Grandstander',
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
 
         // MONTSERRAT
         titleLarge: TextStyle(
           fontFamily: 'Montserrat',
-          fontSize: 24,
+          fontSize: 22,
           fontWeight: FontWeight.w700,
         ),
 
         titleMedium: TextStyle(
           fontFamily: 'Montserrat',
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
 
         bodyLarge: TextStyle(
           fontFamily: 'Montserrat',
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
 
         bodyMedium: TextStyle(
           fontFamily: 'Montserrat',
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.w600,
         ),
 
         labelLarge: TextStyle(
           fontFamily: 'Montserrat',
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.w700,
         ),
       ),

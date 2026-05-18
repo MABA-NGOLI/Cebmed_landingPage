@@ -11,6 +11,8 @@ class AssistantSection extends StatelessWidget {
         final width = constraints.maxWidth;
         final isMobile = width < 700;
         final isTablet = width >= 700 && width < 1100;
+        final mobileVisualWidth = (width * 0.28).clamp(92.0, 128.0);
+        final mobileVisualHeight = (width * 0.40).clamp(150.0, 190.0);
 
         return Container(
           width: double.infinity,
@@ -30,11 +32,11 @@ class AssistantSection extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 1320),
               child: Column(
                 children: [
-                  _introBlock(context, isMobile, isTablet),
+                  _introBlock(context, isMobile, isTablet, mobileVisualWidth),
                   SizedBox(height: isMobile ? 22 : 34),
-                  _secondBlock(context, isMobile, isTablet),
+                  _secondBlock(context, isMobile, isTablet, mobileVisualWidth, mobileVisualHeight),
                   SizedBox(height: isMobile ? 26 : 40),
-                  _thirdBlock(context, isMobile, isTablet),
+                  _thirdBlock(context, isMobile, isTablet, mobileVisualWidth, mobileVisualHeight),
                 ],
               ),
             ),
@@ -44,26 +46,29 @@ class AssistantSection extends StatelessWidget {
     );
   }
 
-  Widget _introBlock(BuildContext context, bool isMobile, bool isTablet) {
+  Widget _introBlock(BuildContext context, bool isMobile, bool isTablet, double mobileVisualWidth) {
     final textTheme = Theme.of(context).textTheme;
 
     if (isMobile) {
-      return Column(
+      return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Transform.translate(
-              offset: const Offset(-12, 0),
-              child: Image.asset(
-                'assets/images/logo_two.png',
-                width: isMobile ? 210 : 250,
-                fit: BoxFit.contain,
+          SizedBox(
+            width: mobileVisualWidth,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Transform.translate(
+                offset: const Offset(-8, -4),
+                child: Image.asset(
+                  'assets/images/logo_two.png',
+                  width: mobileVisualWidth,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 18),
-          _buildContent(textTheme, isMobile),
+          const SizedBox(width: 10),
+          Expanded(child: _buildContent(textTheme, true)),
         ],
       );
     }
@@ -93,46 +98,61 @@ class AssistantSection extends StatelessWidget {
     );
   }
 
-  Widget _secondBlock(BuildContext context, bool isMobile, bool isTablet) {
+  Widget _secondBlock(
+    BuildContext context,
+    bool isMobile,
+    bool isTablet,
+    double mobileVisualWidth,
+    double mobileVisualHeight,
+  ) {
     final textTheme = Theme.of(context).textTheme;
     const description =
-        'Veillez sur la sante de vos parents ou de vos enfants a distance. Recevez une notification si un traitement important a ete omis par un proche.';
+        'Veillez sur la santé de vos parents ou de vos enfants à distance. Recevez une notification si un traitement important a été omis par un proche.';
 
     if (isMobile) {
-      return Column(
+      return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _badge('02', textTheme, isMobile),
-          const SizedBox(height: 16),
-          Text(
-            'Mode aidant : restez connecte aux votres',
-            style: textTheme.headlineMedium?.copyWith(
-              color: const Color(0xFF1E1E26),
-              fontSize: isMobile ? 26 : 34,
-              height: 1.08,
-              fontWeight: FontWeight.w700,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _badge('02', textTheme, isMobile),
+                const SizedBox(height: 12),
+                Text(
+                  'Mode aidant : restez connecté aux vôtres',
+                  style: textTheme.headlineMedium?.copyWith(
+                    color: const Color(0xFF1E1E26),
+                    fontSize: 20,
+                    height: 1.1,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  description,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    height: 1.35,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _avatars(textTheme),
+              ],
             ),
           ),
-          const SizedBox(height: 14),
-          Text(
-            description,
-            style: textTheme.titleMedium?.copyWith(
-              color: Colors.black54,
-              fontWeight: FontWeight.w500,
-              fontSize: isMobile ? 14 : 16,
-              height: 1.45,
-            ),
-          ),
-          const SizedBox(height: 16),
-          _avatars(textTheme),
-          const SizedBox(height: 14),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              'assets/images/Caregiver_Mode.png',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: isMobile ? 230 : 320,
+          const SizedBox(width: 10),
+          SizedBox(
+            width: mobileVisualWidth,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Image.asset(
+                'assets/images/Caregiver_Mode.png',
+                fit: BoxFit.cover,
+                height: mobileVisualHeight,
+              ),
             ),
           ),
         ],
@@ -152,7 +172,7 @@ class AssistantSection extends StatelessWidget {
                 _badge('02', textTheme, false),
                 const SizedBox(height: 16),
                 Text(
-                  'Mode aidant : restez connecte aux votres',
+                  'Mode aidant : restez connecté aux vôtres',
                   style: textTheme.headlineMedium?.copyWith(
                     color: const Color(0xFF1E1E26),
                     fontSize: 36,
@@ -192,48 +212,63 @@ class AssistantSection extends StatelessWidget {
     );
   }
 
-  Widget _thirdBlock(BuildContext context, bool isMobile, bool isTablet) {
+  Widget _thirdBlock(
+    BuildContext context,
+    bool isMobile,
+    bool isTablet,
+    double mobileVisualWidth,
+    double mobileVisualHeight,
+  ) {
     final textTheme = Theme.of(context).textTheme;
     const description =
-        'Ajoutez facilement vos consultations, examens ou rendez-vous medicaux. Cebmed enregistre automatiquement les informations importantes et vous rappelle lorsqu\'un rendez-vous approche.';
+        'Ajoutez facilement vos consultations, examens ou rendez-vous médicaux. Cebmed enregistre automatiquement les informations importantes et vous rappelle lorsqu\'un rendez-vous approche.';
 
     if (isMobile) {
-      return Column(
+      return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              'assets/images/mockupthree.png',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: isMobile ? 230 : 320,
+          SizedBox(
+            width: mobileVisualWidth,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Image.asset(
+                'assets/images/mockupthree.png',
+                fit: BoxFit.cover,
+                height: mobileVisualHeight,
+              ),
             ),
           ),
-          const SizedBox(height: 16),
-          _badge('03', textTheme, isMobile),
-          const SizedBox(height: 14),
-          Text(
-            'Tous vos rendez-vous medicaux au meme endroit',
-            style: textTheme.headlineMedium?.copyWith(
-              color: const Color(0xFF1E1E26),
-              fontSize: isMobile ? 26 : 34,
-              height: 1.08,
-              fontWeight: FontWeight.w700,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _badge('03', textTheme, isMobile),
+                const SizedBox(height: 12),
+                Text(
+                  'Tous vos rendez-vous médicaux au même endroit',
+                  style: textTheme.headlineMedium?.copyWith(
+                    color: const Color(0xFF1E1E26),
+                    fontSize: 20,
+                    height: 1.1,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  description,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    height: 1.35,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _checkLine(textTheme, 'Organisation simplifiée'),
+              ],
             ),
           ),
-          const SizedBox(height: 14),
-          Text(
-            description,
-            style: textTheme.titleMedium?.copyWith(
-              color: Colors.black54,
-              fontWeight: FontWeight.w500,
-              fontSize: isMobile ? 14 : 16,
-              height: 1.45,
-            ),
-          ),
-          const SizedBox(height: 16),
-          _checkLine(textTheme, 'Organisation simplifiee'),
         ],
       );
     }
@@ -261,7 +296,7 @@ class AssistantSection extends StatelessWidget {
               _badge('03', textTheme, false),
               const SizedBox(height: 16),
               Text(
-                'Tous vos rendez-vous medicaux au meme endroit',
+                'Tous vos rendez-vous médicaux au même endroit',
                 style: textTheme.headlineMedium?.copyWith(
                   color: const Color(0xFF1E1E26),
                   fontSize: 36,
@@ -280,7 +315,7 @@ class AssistantSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 18),
-              _checkLine(textTheme, 'Organisation simplifiee'),
+              _checkLine(textTheme, 'Organisation simplifiée'),
             ],
           ),
         ),
@@ -298,6 +333,7 @@ class AssistantSection extends StatelessWidget {
           style: textTheme.bodyLarge?.copyWith(
             color: Colors.black54,
             fontWeight: FontWeight.w500,
+            fontSize: 15,
           ),
         ),
       ],
@@ -356,28 +392,28 @@ class AssistantSection extends StatelessWidget {
         _badge('01', textTheme, isMobile),
         const SizedBox(height: 16),
         Text(
-          'CEB, votre assistant quotidien au service de votre serenite',
+          'CEB, votre assistant quotidien au service de votre sérénité',
           style: textTheme.headlineMedium?.copyWith(
             color: const Color(0xFF1E1E26),
-            fontSize: isMobile ? 26 : 36,
+            fontSize: isMobile ? 20 : 36,
             height: 1.05,
             fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 16),
         Text(
-          'Rappels, ordonnances, rendez-vous et suivi : Cebmed reduit la charge mentale liee aux traitements grace a un accompagnement simple et rassurant',
+          'Rappels, ordonnances, rendez-vous et suivi : Cebmed réduit la charge mentale liée aux traitements grâce à un accompagnement simple et rassurant',
           style: textTheme.titleMedium?.copyWith(
             color: Colors.black54,
             fontWeight: FontWeight.w500,
-            fontSize: isMobile ? 15 : 18,
-            height: 1.45,
+            fontSize: isMobile ? 14 : 18,
+            height: isMobile ? 1.35 : 1.45,
           ),
         ),
         const SizedBox(height: 18),
         _checkLine(textTheme, 'Stockage des ordonnances'),
         const SizedBox(height: 8),
-        _checkLine(textTheme, 'Suivi des prises en temps reel'),
+        _checkLine(textTheme, 'Suivi des prises en temps réel'),
       ],
     );
   }

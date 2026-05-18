@@ -46,13 +46,13 @@ class FeaturesSection extends StatelessWidget {
                   if (w < 700) {
                     return const Column(
                       children: [
-                        _FeatureCard(icon: Icons.notifications, title: 'Rappels\nintelligents', description: 'Des notifications qui s\'adaptent a votre emploi du temps pour ne jamais rien oublier.'),
+                        _FeatureCard(icon: Icons.notifications, title: 'Rappels\nintelligents', description: 'Des notifications qui s\'adaptent à votre emploi du temps pour ne jamais rien oublier.'),
                         SizedBox(height: 14),
-                        _FeatureCard(icon: Icons.lock, title: 'Confidentialite\ntotale', description: 'Vos donnees de sante sont cryptees et stockees exclusivement sur des serveurs HDS en France.'),
+                        _FeatureCard(icon: Icons.lock, title: 'Confidentialité\ntotale', description: 'Vos données de santé sont cryptées et stockées exclusivement sur des serveurs HDS en France.'),
                         SizedBox(height: 14),
-                        _FeatureCard(icon: Icons.verified_user, title: 'Mode\naidant', description: 'Le mode aidant permet a un proche de veiller sur vous en cas d\'oubli, pour plus de serenite au quotidien.'),
+                        _FeatureCard(icon: Icons.verified_user, title: 'Mode\naidant', description: 'Le mode aidant permet à un proche de veiller sur vous en cas d\'oubli, pour plus de sérénité au quotidien.'),
                         SizedBox(height: 14),
-                        _FeatureCard(icon: Icons.description, title: 'Documents\nsecurises', description: 'Centralisez toutes vos ordonnances dans un coffre-fort numerique.'),
+                        _FeatureCard(icon: Icons.description, title: 'Documents\nsécurisés', description: 'Centralisez toutes vos ordonnances dans un coffre-fort numérique.'),
                       ],
                     );
                   }
@@ -65,10 +65,10 @@ class FeaturesSection extends StatelessWidget {
                     mainAxisSpacing: 16,
                     childAspectRatio: w >= 1150 ? 1.05 : 1.18,
                     children: const [
-                      _FeatureCard(icon: Icons.notifications, title: 'Rappels\nintelligents', description: 'Des notifications qui s\'adaptent a votre emploi du temps pour ne jamais rien oublier.'),
-                      _FeatureCard(icon: Icons.lock, title: 'Confidentialite\ntotale', description: 'Vos donnees de sante sont cryptees et stockees exclusivement sur des serveurs HDS en France.'),
-                      _FeatureCard(icon: Icons.verified_user, title: 'Mode\naidant', description: 'Le mode aidant permet a un proche de veiller sur vous en cas d\'oubli, pour plus de serenite au quotidien.'),
-                      _FeatureCard(icon: Icons.description, title: 'Documents\nsecurises', description: 'Centralisez toutes vos ordonnances dans un coffre-fort numerique.'),
+                      _FeatureCard(icon: Icons.notifications, title: 'Rappels\nintelligents', description: 'Des notifications qui s\'adaptent à votre emploi du temps pour ne jamais rien oublier.'),
+                      _FeatureCard(icon: Icons.lock, title: 'Confidentialité\ntotale', description: 'Vos données de santé sont cryptées et stockées exclusivement sur des serveurs HDS en France.'),
+                      _FeatureCard(icon: Icons.verified_user, title: 'Mode\naidant', description: 'Le mode aidant permet à un proche de veiller sur vous en cas d\'oubli, pour plus de sérénité au quotidien.'),
+                      _FeatureCard(icon: Icons.description, title: 'Documents\nsécurisés', description: 'Centralisez toutes vos ordonnances dans un coffre-fort numérique.'),
                     ],
                   );
                 },

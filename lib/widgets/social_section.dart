@@ -44,7 +44,7 @@ class SocialSection extends StatelessWidget {
                       children: [
                         _leftContent(context, textTheme, isMobile: true, isTablet: false),
                         const SizedBox(height: 20),
-                        Center(child: _instagramLogoAsset(140)),
+                        Center(child: _instagramLogoAsset(110)),
                       ],
                     )
                   : Row(
@@ -59,7 +59,7 @@ class SocialSection extends StatelessWidget {
                           flex: 4,
                           child: Align(
                             alignment: Alignment.centerRight,
-                            child: _instagramLogoAsset(isTablet ? 190 : 240),
+                            child: _instagramLogoAsset(isTablet ? 150 : 190),
                           ),
                         ),
                       ],
@@ -151,7 +151,7 @@ class SocialSection extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(size * 0.22),
       child: Image.asset(
-        'assets/images/instagram-logo.png',
+        'assets/images/Instagram_Cebmed.png',
         width: size,
         height: size,
         fit: BoxFit.cover,
@@ -159,7 +159,6 @@ class SocialSection extends StatelessWidget {
     );
   }
 }
-
 
 
 

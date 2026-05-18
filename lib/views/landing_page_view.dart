@@ -2,6 +2,7 @@
 import '../theme/app_theme.dart';
 import '../widgets/assistant_section.dart';
 import '../widgets/features_section.dart';
+import '../widgets/footer_section.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/pricing_section.dart';
 import '../widgets/social_section.dart';
@@ -46,6 +47,7 @@ class LandingPageView extends StatelessWidget {
                       const PricingSection(),
                       const SocialSection(),
                       const AppDownloadSection(),
+                      const FooterSection(),
                     ],
                   ),
                 ),
