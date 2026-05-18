@@ -15,8 +15,8 @@ class PricingSection extends StatelessWidget {
       width: double.infinity,
       color: const Color(0xFFC9D5EA),
       padding: EdgeInsets.symmetric(
-        horizontal: isCompact ? 8 : (isMobile ? 12 : 24),
-        vertical: isCompact ? 14 : (isMobile ? 22 : 34),
+        horizontal: isCompact ? 12 : (isMobile ? 16 : 24),
+        vertical: isCompact ? 24 : (isMobile ? 38 : 34),
       ),
       child: Center(
         child: ConstrainedBox(
@@ -29,10 +29,10 @@ class PricingSection extends StatelessWidget {
                 style: textTheme.headlineLarge?.copyWith(
                   color: const Color(0xFF1E1E26),
                   fontWeight: FontWeight.w700,
-                  fontSize: isMobile ? 34 : 44,
+                  fontSize: isMobile ? 30 : 44,
                 ),
               ),
-              SizedBox(height: isMobile ? 18 : 28),
+              SizedBox(height: isMobile ? 24 : 28),
               if (isMobile)
                 Center(
                   child: ConstrainedBox(
@@ -40,7 +40,7 @@ class PricingSection extends StatelessWidget {
                     child: Column(
                       children: [
                         _FreePlanCard(isCompact: isCompact),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         _PremiumPlanCard(isCompact: isCompact),
                       ],
                     ),

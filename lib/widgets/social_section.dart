@@ -32,8 +32,8 @@ class SocialSection extends StatelessWidget {
           width: double.infinity,
           color: const Color(0xFFF7F7F8),
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 14 : (isTablet ? 24 : 32),
-            vertical: isMobile ? 20 : (isTablet ? 30 : 40),
+            horizontal: isMobile ? 18 : (isTablet ? 24 : 32),
+            vertical: isMobile ? 36 : (isTablet ? 30 : 40),
           ),
           child: Center(
             child: ConstrainedBox(
@@ -43,7 +43,7 @@ class SocialSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _leftContent(context, textTheme, isMobile: true, isTablet: false),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 28),
                         Center(child: _instagramLogoAsset(110)),
                       ],
                     )
@@ -72,7 +72,7 @@ class SocialSection extends StatelessWidget {
   }
 
   Widget _leftContent(BuildContext context, TextTheme textTheme, {required bool isMobile, required bool isTablet}) {
-    final titleSize = isMobile ? 28.0 : (isTablet ? 34.0 : 44.0);
+    final titleSize = isMobile ? 30.0 : (isTablet ? 34.0 : 44.0);
     final bodySize = isMobile ? 15.0 : (isTablet ? 16.0 : 18.0);
     final lineSize = isMobile ? 14.0 : (isTablet ? 15.0 : 16.0);
 
@@ -159,6 +159,3 @@ class SocialSection extends StatelessWidget {
     );
   }
 }
-
-
-

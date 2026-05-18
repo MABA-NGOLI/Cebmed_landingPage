@@ -8,6 +8,10 @@ class FooterSection extends StatelessWidget {
   static final Uri _instagramUri = Uri.parse(
     'https://www.instagram.com/cebmed.app/',
   );
+  static final Uri _contactEmailUri = Uri(
+    scheme: 'mailto',
+    path: 'cebmed.contact@gmail.com',
+  );
 
   Future<void> _openInstagram(BuildContext context) async {
     final opened = await launchUrl(_instagramUri, mode: LaunchMode.platformDefault);
@@ -16,6 +20,21 @@ class FooterSection extends StatelessWidget {
         const SnackBar(content: Text('Impossible d\'ouvrir Instagram.')),
       );
     }
+  }
+
+  Future<void> _openEmail(BuildContext context) async {
+    final opened = await launchUrl(_contactEmailUri, mode: LaunchMode.platformDefault);
+    if (!opened && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Impossible d\'ouvrir votre application email.')),
+      );
+    }
+  }
+
+  void _onFooterLinkTap(BuildContext context, String label) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$label bientôt disponible.')),
+    );
   }
 
   @override
@@ -31,20 +50,20 @@ class FooterSection extends StatelessWidget {
           width: double.infinity,
           color: AppTheme.white,
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 16 : 24,
-            vertical: isMobile ? 22 : 28,
+            horizontal: isMobile ? 18 : 24,
+            vertical: isMobile ? 34 : 28,
           ),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1320),
               child: Column(
                 children: [
-                  isMobile ? _mobileTop(textTheme) : _desktopTopWithNewsletter(textTheme),
+                  isMobile ? _mobileTop(context, textTheme) : _desktopTopWithNewsletter(context, textTheme),
                   if (isMobile) ...[
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 18),
                     _mobileNewsletter(textTheme),
                   ],
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 18),
                   const Divider(height: 1, color: Color(0xFFEAEAF0)),
                   const SizedBox(height: 10),
                   _bottomRow(context, textTheme, isMobile: isMobile),
@@ -57,7 +76,7 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _desktopTop(TextTheme textTheme) {
+  Widget _desktopTop(BuildContext context, TextTheme textTheme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -102,11 +121,23 @@ class FooterSection extends StatelessWidget {
             alignment: WrapAlignment.end,
             spacing: 28,
             runSpacing: 10,
-            children: const [
-              _FooterLink(label: 'Confidentialité'),
-              _FooterLink(label: 'Mentions légales'),
-              _FooterLink(label: 'Sécurité des données'),
-              _FooterLink(label: 'Support'),
+            children: [
+              _FooterLink(
+                label: 'Confidentialité',
+                onTap: () => _onFooterLinkTap(context, 'Confidentialité'),
+              ),
+              _FooterLink(
+                label: 'Mentions légales',
+                onTap: () => _onFooterLinkTap(context, 'Mentions légales'),
+              ),
+              _FooterLink(
+                label: 'Sécurité des données',
+                onTap: () => _onFooterLinkTap(context, 'Sécurité des données'),
+              ),
+              _FooterLink(
+                label: 'Support',
+                onTap: () => _onFooterLinkTap(context, 'Support'),
+              ),
             ],
           ),
         ),
@@ -114,7 +145,7 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _desktopTopWithNewsletter(TextTheme textTheme) {
+  Widget _desktopTopWithNewsletter(BuildContext context, TextTheme textTheme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -149,6 +180,19 @@ class FooterSection extends StatelessWidget {
                   height: 1.4,
                   fontWeight: FontWeight.w500,
                 ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Contact',
+                style: textTheme.bodyLarge?.copyWith(
+                  color: AppTheme.black,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              _FooterLink(
+                label: 'cebmed.contact@gmail.com',
+                onTap: () => _openEmail(context),
               ),
               const SizedBox(height: 14),
               _desktopNewsletter(textTheme),
@@ -162,11 +206,23 @@ class FooterSection extends StatelessWidget {
             alignment: WrapAlignment.end,
             spacing: 28,
             runSpacing: 10,
-            children: const [
-              _FooterLink(label: 'Confidentialité'),
-              _FooterLink(label: 'Mentions légales'),
-              _FooterLink(label: 'Sécurité des données'),
-              _FooterLink(label: 'Support'),
+            children: [
+              _FooterLink(
+                label: 'Confidentialité',
+                onTap: () => _onFooterLinkTap(context, 'Confidentialité'),
+              ),
+              _FooterLink(
+                label: 'Mentions légales',
+                onTap: () => _onFooterLinkTap(context, 'Mentions légales'),
+              ),
+              _FooterLink(
+                label: 'Sécurité des données',
+                onTap: () => _onFooterLinkTap(context, 'Sécurité des données'),
+              ),
+              _FooterLink(
+                label: 'Support',
+                onTap: () => _onFooterLinkTap(context, 'Support'),
+              ),
             ],
           ),
         ),
@@ -174,7 +230,7 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _mobileTop(TextTheme textTheme) {
+  Widget _mobileTop(BuildContext context, TextTheme textTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -206,16 +262,41 @@ class FooterSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        const Column(
+        Text(
+          'Contact',
+          style: textTheme.bodyLarge?.copyWith(
+            color: AppTheme.black,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 6),
+        _FooterLink(
+          label: 'cebmed.contact@gmail.com',
+          onTap: () => _openEmail(context),
+        ),
+        const SizedBox(height: 12),
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _FooterLink(label: 'Confidentialité'),
-            SizedBox(height: 6),
-            _FooterLink(label: 'Mentions légales'),
-            SizedBox(height: 6),
-            _FooterLink(label: 'Sécurité des données'),
-            SizedBox(height: 6),
-            _FooterLink(label: 'Support'),
+            _FooterLink(
+              label: 'Confidentialité',
+              onTap: () => _onFooterLinkTap(context, 'Confidentialité'),
+            ),
+            const SizedBox(height: 6),
+            _FooterLink(
+              label: 'Mentions légales',
+              onTap: () => _onFooterLinkTap(context, 'Mentions légales'),
+            ),
+            const SizedBox(height: 6),
+            _FooterLink(
+              label: 'Sécurité des données',
+              onTap: () => _onFooterLinkTap(context, 'Sécurité des données'),
+            ),
+            const SizedBox(height: 6),
+            _FooterLink(
+              label: 'Support',
+              onTap: () => _onFooterLinkTap(context, 'Support'),
+            ),
           ],
         ),
       ],
@@ -349,8 +430,8 @@ class FooterSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 360),
+        SizedBox(
+          width: double.infinity,
           child: Container(
             height: 46,
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -377,19 +458,16 @@ class FooterSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 360),
-          child: SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              onPressed: () {},
-              style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.primaryPink,
-                minimumSize: const Size.fromHeight(44),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-              ),
-              child: const Text('S\'inscrire'),
+        SizedBox(
+          width: double.infinity,
+          child: FilledButton(
+            onPressed: () {},
+            style: FilledButton.styleFrom(
+              backgroundColor: AppTheme.primaryPink,
+              minimumSize: const Size.fromHeight(44),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
             ),
+            child: const Text('S\'inscrire'),
           ),
         ),
       ],
@@ -398,15 +476,19 @@ class FooterSection extends StatelessWidget {
 }
 
 class _FooterLink extends StatelessWidget {
-  const _FooterLink({required this.label});
+  const _FooterLink({
+    required this.label,
+    this.onTap,
+  });
 
   final String label;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       borderRadius: BorderRadius.circular(6),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),

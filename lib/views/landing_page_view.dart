@@ -1,21 +1,57 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_download_section.dart';
 import '../widgets/assistant_section.dart';
 import '../widgets/features_section.dart';
 import '../widgets/footer_section.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/pricing_section.dart';
 import '../widgets/social_section.dart';
-import '../widgets/app_download_section.dart';
+import '../widgets/top_navigation.dart';
 
-class LandingPageView extends StatelessWidget {
+class LandingPageView extends StatefulWidget {
   const LandingPageView({super.key});
 
-  static const String _ctaLabel = 'Telecharger l\'App';
+  @override
+  State<LandingPageView> createState() => _LandingPageViewState();
+}
 
-  void _onPrimaryCtaPressed(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('CTA cliquee: Telecharger l\'App')),
+class _LandingPageViewState extends State<LandingPageView> {
+  static const String _ctaLabel = 'Telecharger l\'App';
+  static final Uri _googlePlayUri = Uri.parse('https://play.google.com/store/games?hl=fr');
+  static final Uri _appStoreUri = Uri.parse('https://www.apple.com/fr/app-store/');
+
+  final GlobalKey _featuresKey = GlobalKey();
+  final GlobalKey _pricingKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
+  Future<void> _onPrimaryCtaPressed(BuildContext context) async {
+    final opened = await launchUrl(_googlePlayUri, mode: LaunchMode.platformDefault);
+    if (!opened && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Impossible d\'ouvrir Google Play.')),
+      );
+    }
+  }
+
+  Future<void> _onAppStoreTap(BuildContext context) async {
+    final opened = await launchUrl(_appStoreUri, mode: LaunchMode.platformDefault);
+    if (!opened && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Impossible d\'ouvrir l\'App Store.')),
+      );
+    }
+  }
+
+  Future<void> _scrollToKey(GlobalKey key) async {
+    final ctx = key.currentContext;
+    if (ctx == null) return;
+    await Scrollable.ensureVisible(
+      ctx,
+      duration: const Duration(milliseconds: 450),
+      curve: Curves.easeInOut,
+      alignment: 0.02,
     );
   }
 
@@ -29,10 +65,13 @@ class LandingPageView extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              _TopNavigation(
+              TopNavigation(
                 ctaLabel: _ctaLabel,
                 onPrimaryCtaPressed: () => _onPrimaryCtaPressed(context),
                 textTheme: textTheme,
+                onFeaturesTap: () => _scrollToKey(_featuresKey),
+                onPricingTap: () => _scrollToKey(_pricingKey),
+                onContactTap: () => _scrollToKey(_contactKey),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -42,12 +81,15 @@ class LandingPageView extends StatelessWidget {
                         ctaLabel: _ctaLabel,
                         onPrimaryCtaPressed: () => _onPrimaryCtaPressed(context),
                       ),
-                      const FeaturesSection(),
+                      Container(key: _featuresKey, child: const FeaturesSection()),
                       const AssistantSection(),
-                      const PricingSection(),
+                      Container(key: _pricingKey, child: const PricingSection()),
                       const SocialSection(),
-                      const AppDownloadSection(),
-                      const FooterSection(),
+                      AppDownloadSection(
+                        onAppStoreTap: () => _onAppStoreTap(context),
+                        onGooglePlayTap: () => _onPrimaryCtaPressed(context),
+                      ),
+                      Container(key: _contactKey, child: const FooterSection()),
                     ],
                   ),
                 ),
@@ -59,82 +101,3 @@ class LandingPageView extends StatelessWidget {
     );
   }
 }
-
-class _TopNavigation extends StatelessWidget {
-  const _TopNavigation({
-    required this.ctaLabel,
-    required this.onPrimaryCtaPressed,
-    required this.textTheme,
-  });
-
-  final String ctaLabel;
-  final VoidCallback onPrimaryCtaPressed;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < 600;
-    final horizontalPadding = isMobile ? 12.0 : 20.0;
-    final logoSize = isMobile ? 24.0 : 30.0;
-    final brandStyle = isMobile
-        ? textTheme.headlineSmall?.copyWith(color: AppTheme.black, fontWeight: FontWeight.w700)
-        : textTheme.headlineMedium?.copyWith(color: AppTheme.black, fontWeight: FontWeight.w700);
-
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 12),
-      decoration: const BoxDecoration(color: AppTheme.white),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    'Cebmed',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: brandStyle,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Image.asset(
-                  'assets/images/logo.png',
-                  height: logoSize,
-                  width: logoSize,
-                  fit: BoxFit.contain,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          ElevatedButton.icon(
-            onPressed: onPrimaryCtaPressed,
-            icon: Icon(Icons.file_download_rounded, size: isMobile ? 14 : 16),
-            label: Text(
-              isMobile ? 'Telecharger' : ctaLabel,
-              style: textTheme.bodyMedium?.copyWith(color: AppTheme.white),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primaryPink,
-              foregroundColor: AppTheme.white,
-              elevation: 0,
-              minimumSize: Size(0, isMobile ? 40 : 44),
-              padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: isMobile ? 8 : 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-
-

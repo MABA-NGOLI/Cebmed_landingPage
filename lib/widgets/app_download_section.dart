@@ -24,8 +24,8 @@ class AppDownloadSection extends StatelessWidget {
           width: double.infinity,
           color: const Color(0xFFF7F7F8),
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 12 : 20,
-            vertical: isMobile ? 18 : 28,
+            horizontal: isMobile ? 16 : 20,
+            vertical: isMobile ? 34 : 28,
           ),
           child: Center(
             child: ConstrainedBox(
@@ -158,7 +158,7 @@ class AppDownloadSection extends StatelessWidget {
           textAlign: TextAlign.center,
           style: textTheme.headlineMedium?.copyWith(
             color: AppTheme.white,
-            fontSize: 34,
+            fontSize: 30,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -173,7 +173,7 @@ class AppDownloadSection extends StatelessWidget {
             height: 1.35,
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 22),
         _StoreBadge(
           onTap: onAppStoreTap,
           child: Image.asset(
@@ -191,7 +191,7 @@ class AppDownloadSection extends StatelessWidget {
             fit: BoxFit.contain,
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 20),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

@@ -11,14 +11,14 @@ class AssistantSection extends StatelessWidget {
         final width = constraints.maxWidth;
         final isMobile = width < 700;
         final isTablet = width >= 700 && width < 1100;
-        final mobileVisualWidth = (width * 0.28).clamp(92.0, 128.0);
+        final mobileVisualWidth = (width * 0.24).clamp(78.0, 108.0);
         final mobileVisualHeight = (width * 0.40).clamp(150.0, 190.0);
 
         return Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 14 : 28,
-            vertical: isMobile ? 24 : 40,
+            horizontal: isMobile ? 18 : 28,
+            vertical: isMobile ? 38 : 40,
           ),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -33,9 +33,9 @@ class AssistantSection extends StatelessWidget {
               child: Column(
                 children: [
                   _introBlock(context, isMobile, isTablet, mobileVisualWidth),
-                  SizedBox(height: isMobile ? 22 : 34),
+                  SizedBox(height: isMobile ? 30 : 34),
                   _secondBlock(context, isMobile, isTablet, mobileVisualWidth, mobileVisualHeight),
-                  SizedBox(height: isMobile ? 26 : 40),
+                  SizedBox(height: isMobile ? 34 : 40),
                   _thirdBlock(context, isMobile, isTablet, mobileVisualWidth, mobileVisualHeight),
                 ],
               ),
@@ -53,22 +53,25 @@ class AssistantSection extends StatelessWidget {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: mobileVisualWidth,
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Transform.translate(
-                offset: const Offset(-8, -4),
-                child: Image.asset(
-                  'assets/images/logo_two.png',
-                  width: mobileVisualWidth,
-                  fit: BoxFit.contain,
+          Flexible(
+            flex: 3,
+            child: SizedBox(
+              width: mobileVisualWidth,
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Transform.translate(
+                  offset: const Offset(-6, -2),
+                  child: Image.asset(
+                    'assets/images/logo_two.png',
+                    width: mobileVisualWidth,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 10),
-          Expanded(child: _buildContent(textTheme, true)),
+          const SizedBox(width: 8),
+          Expanded(flex: 7, child: _buildContent(textTheme, true)),
         ],
       );
     }
@@ -114,6 +117,7 @@ class AssistantSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
+            flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -143,15 +147,18 @@ class AssistantSection extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10),
-          SizedBox(
-            width: mobileVisualWidth,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: Image.asset(
-                'assets/images/Caregiver_Mode.png',
-                fit: BoxFit.cover,
-                height: mobileVisualHeight,
+          const SizedBox(width: 8),
+          Flexible(
+            flex: 3,
+            child: SizedBox(
+              width: mobileVisualWidth,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.asset(
+                  'assets/images/Caregiver_Mode.png',
+                  fit: BoxFit.cover,
+                  height: mobileVisualHeight,
+                ),
               ),
             ),
           ),
@@ -227,19 +234,23 @@ class AssistantSection extends StatelessWidget {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: mobileVisualWidth,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: Image.asset(
-                'assets/images/mockupthree.png',
-                fit: BoxFit.cover,
-                height: mobileVisualHeight,
+          Flexible(
+            flex: 3,
+            child: SizedBox(
+              width: mobileVisualWidth,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.asset(
+                  'assets/images/mockupthree.png',
+                  fit: BoxFit.cover,
+                  height: mobileVisualHeight,
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
+            flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -328,12 +339,14 @@ class AssistantSection extends StatelessWidget {
       children: [
         const Icon(Icons.done_all_rounded, color: AppTheme.primaryPink, size: 18),
         const SizedBox(width: 8),
-        Text(
-          text,
-          style: textTheme.bodyLarge?.copyWith(
-            color: Colors.black54,
-            fontWeight: FontWeight.w500,
-            fontSize: 15,
+        Expanded(
+          child: Text(
+            text,
+            style: textTheme.bodyLarge?.copyWith(
+              color: Colors.black54,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+            ),
           ),
         ),
       ],

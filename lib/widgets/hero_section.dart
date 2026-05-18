@@ -30,15 +30,15 @@ class HeroSection extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 1300),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 14 : 24,
-            vertical: isMobile ? 18 : 28,
+            horizontal: isMobile ? 18 : 24,
+            vertical: isMobile ? 30 : 28,
           ),
           child: isMobile
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildLeft(context, width),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 28),
                     _buildRight(width),
                   ],
                 )
@@ -78,7 +78,7 @@ class HeroSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: isMobile ? 8 : 16),
+        SizedBox(height: isMobile ? 12 : 16),
         Text(_heroTitlePart1, style: titleStyle),
         RichText(
           text: TextSpan(
@@ -90,7 +90,7 @@ class HeroSection extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: isMobile ? 16 : 22),
+        SizedBox(height: isMobile ? 20 : 22),
         Text(
           _heroDescription1,
           style: textTheme.titleMedium?.copyWith(
@@ -109,7 +109,7 @@ class HeroSection extends StatelessWidget {
             fontSize: bodySize,
           ),
         ),
-        SizedBox(height: isMobile ? 20 : 30),
+        SizedBox(height: isMobile ? 26 : 30),
         ElevatedButton.icon(
           onPressed: onPrimaryCtaPressed,
           icon: Icon(Icons.apple, size: isMobile ? 18 : 20),

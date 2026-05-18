@@ -14,7 +14,7 @@ class FeaturesSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: AppTheme.primaryBlue.withValues(alpha: 0.35),
-      padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 18, vertical: isMobile ? 20 : 28),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 18, vertical: isMobile ? 36 : 28),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1320),
@@ -26,10 +26,10 @@ class FeaturesSection extends StatelessWidget {
                 style: textTheme.headlineLarge?.copyWith(
                   color: AppTheme.black,
                   fontWeight: FontWeight.w700,
-                  fontSize: isMobile ? 24 : (isTablet ? 30 : 36),
+                  fontSize: isMobile ? 30 : (isTablet ? 30 : 36),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 14),
               Text(
                 'Une approche centrée sur l\'humain pour vous accompagner sereinement dans votre parcours de soin.',
                 textAlign: TextAlign.center,
@@ -39,7 +39,7 @@ class FeaturesSection extends StatelessWidget {
                   fontSize: isMobile ? 13 : 16,
                 ),
               ),
-              SizedBox(height: isMobile ? 18 : 28),
+              SizedBox(height: isMobile ? 24 : 28),
               LayoutBuilder(
                 builder: (context, constraints) {
                   final w = constraints.maxWidth;
@@ -47,11 +47,11 @@ class FeaturesSection extends StatelessWidget {
                     return const Column(
                       children: [
                         _FeatureCard(icon: Icons.notifications, title: 'Rappels\nintelligents', description: 'Des notifications qui s\'adaptent à votre emploi du temps pour ne jamais rien oublier.'),
-                        SizedBox(height: 14),
+                        SizedBox(height: 18),
                         _FeatureCard(icon: Icons.lock, title: 'Confidentialité\ntotale', description: 'Vos données de santé sont cryptées et stockées exclusivement sur des serveurs HDS en France.'),
-                        SizedBox(height: 14),
+                        SizedBox(height: 18),
                         _FeatureCard(icon: Icons.verified_user, title: 'Mode\naidant', description: 'Le mode aidant permet à un proche de veiller sur vous en cas d\'oubli, pour plus de sérénité au quotidien.'),
-                        SizedBox(height: 14),
+                        SizedBox(height: 18),
                         _FeatureCard(icon: Icons.description, title: 'Documents\nsécurisés', description: 'Centralisez toutes vos ordonnances dans un coffre-fort numérique.'),
                       ],
                     );
