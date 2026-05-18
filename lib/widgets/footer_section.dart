@@ -1,17 +1,39 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
+import '../viewmodels/newsletter_view_model.dart';
 
-class FooterSection extends StatelessWidget {
+class FooterSection extends StatefulWidget {
   const FooterSection({super.key});
 
-  static final Uri _instagramUri = Uri.parse(
-    'https://www.instagram.com/cebmed.app/',
-  );
-  static final Uri _contactEmailUri = Uri(
-    scheme: 'mailto',
-    path: 'cebmed.contact@gmail.com',
-  );
+  @override
+  State<FooterSection> createState() => _FooterSectionState();
+}
+
+class _FooterSectionState extends State<FooterSection> {
+  static final Uri _instagramUri = Uri.parse('https://www.instagram.com/cebmed.app/');
+  static final Uri _contactEmailUri = Uri(scheme: 'mailto', path: 'cebmed.contact@gmail.com');
+
+  final TextEditingController _newsletterController = TextEditingController();
+  late final NewsletterViewModel _newsletterViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _newsletterViewModel = NewsletterViewModel()..addListener(_onViewModelChanged);
+  }
+
+  void _onViewModelChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _newsletterController.dispose();
+    _newsletterViewModel.removeListener(_onViewModelChanged);
+    _newsletterViewModel.dispose();
+    super.dispose();
+  }
 
   Future<void> _openInstagram(BuildContext context) async {
     final opened = await launchUrl(_instagramUri, mode: LaunchMode.platformDefault);
@@ -35,6 +57,15 @@ class FooterSection extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('$label bientôt disponible.')),
     );
+  }
+
+  Future<void> _submitNewsletter() async {
+    final message = await _newsletterViewModel.submit(_newsletterController.text);
+    if (!mounted) return;
+    if (message == 'Inscription newsletter réussie.') {
+      _newsletterController.clear();
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -76,75 +107,6 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _desktopTop(BuildContext context, TextTheme textTheme) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Cebmed',
-                    style: textTheme.headlineSmall?.copyWith(
-                      color: AppTheme.black,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.contain,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'L assistant santé nouvelle génération, conçu\npour votre bien-être.',
-                style: textTheme.bodyMedium?.copyWith(
-                  color: const Color(0xFF5A5D6A),
-                  height: 1.4,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 7,
-          child: Wrap(
-            alignment: WrapAlignment.end,
-            spacing: 28,
-            runSpacing: 10,
-            children: [
-              _FooterLink(
-                label: 'Confidentialité',
-                onTap: () => _onFooterLinkTap(context, 'Confidentialité'),
-              ),
-              _FooterLink(
-                label: 'Mentions légales',
-                onTap: () => _onFooterLinkTap(context, 'Mentions légales'),
-              ),
-              _FooterLink(
-                label: 'Sécurité des données',
-                onTap: () => _onFooterLinkTap(context, 'Sécurité des données'),
-              ),
-              _FooterLink(
-                label: 'Support',
-                onTap: () => _onFooterLinkTap(context, 'Support'),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _desktopTopWithNewsletter(BuildContext context, TextTheme textTheme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,12 +126,7 @@ class FooterSection extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.contain,
-                  ),
+                  Image.asset('assets/images/logo.png', width: 24, height: 24, fit: BoxFit.contain),
                 ],
               ),
               const SizedBox(height: 8),
@@ -207,22 +164,10 @@ class FooterSection extends StatelessWidget {
             spacing: 28,
             runSpacing: 10,
             children: [
-              _FooterLink(
-                label: 'Confidentialité',
-                onTap: () => _onFooterLinkTap(context, 'Confidentialité'),
-              ),
-              _FooterLink(
-                label: 'Mentions légales',
-                onTap: () => _onFooterLinkTap(context, 'Mentions légales'),
-              ),
-              _FooterLink(
-                label: 'Sécurité des données',
-                onTap: () => _onFooterLinkTap(context, 'Sécurité des données'),
-              ),
-              _FooterLink(
-                label: 'Support',
-                onTap: () => _onFooterLinkTap(context, 'Support'),
-              ),
+              _FooterLink(label: 'Confidentialité', onTap: () => _onFooterLinkTap(context, 'Confidentialité')),
+              _FooterLink(label: 'Mentions légales', onTap: () => _onFooterLinkTap(context, 'Mentions légales')),
+              _FooterLink(label: 'Sécurité des données', onTap: () => _onFooterLinkTap(context, 'Sécurité des données')),
+              _FooterLink(label: 'Support', onTap: () => _onFooterLinkTap(context, 'Support')),
             ],
           ),
         ),
@@ -244,12 +189,7 @@ class FooterSection extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            Image.asset(
-              'assets/images/logo.png',
-              width: 22,
-              height: 22,
-              fit: BoxFit.contain,
-            ),
+            Image.asset('assets/images/logo.png', width: 22, height: 22, fit: BoxFit.contain),
           ],
         ),
         const SizedBox(height: 8),
@@ -264,39 +204,21 @@ class FooterSection extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           'Contact',
-          style: textTheme.bodyLarge?.copyWith(
-            color: AppTheme.black,
-            fontWeight: FontWeight.w700,
-          ),
+          style: textTheme.bodyLarge?.copyWith(color: AppTheme.black, fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 6),
-        _FooterLink(
-          label: 'cebmed.contact@gmail.com',
-          onTap: () => _openEmail(context),
-        ),
+        _FooterLink(label: 'cebmed.contact@gmail.com', onTap: () => _openEmail(context)),
         const SizedBox(height: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _FooterLink(
-              label: 'Confidentialité',
-              onTap: () => _onFooterLinkTap(context, 'Confidentialité'),
-            ),
+            _FooterLink(label: 'Confidentialité', onTap: () => _onFooterLinkTap(context, 'Confidentialité')),
             const SizedBox(height: 6),
-            _FooterLink(
-              label: 'Mentions légales',
-              onTap: () => _onFooterLinkTap(context, 'Mentions légales'),
-            ),
+            _FooterLink(label: 'Mentions légales', onTap: () => _onFooterLinkTap(context, 'Mentions légales')),
             const SizedBox(height: 6),
-            _FooterLink(
-              label: 'Sécurité des données',
-              onTap: () => _onFooterLinkTap(context, 'Sécurité des données'),
-            ),
+            _FooterLink(label: 'Sécurité des données', onTap: () => _onFooterLinkTap(context, 'Sécurité des données')),
             const SizedBox(height: 6),
-            _FooterLink(
-              label: 'Support',
-              onTap: () => _onFooterLinkTap(context, 'Support'),
-            ),
+            _FooterLink(label: 'Support', onTap: () => _onFooterLinkTap(context, 'Support')),
           ],
         ),
       ],
@@ -305,7 +227,7 @@ class FooterSection extends StatelessWidget {
 
   Widget _bottomRow(BuildContext context, TextTheme textTheme, {required bool isMobile}) {
     if (isMobile) {
-          return Column(
+      return Column(
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -314,12 +236,7 @@ class FooterSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Padding(
                 padding: const EdgeInsets.all(2),
-                child: Image.asset(
-                  'assets/images/instagram-logo.png',
-                  width: 18,
-                  height: 18,
-                  fit: BoxFit.contain,
-                ),
+                child: Image.asset('assets/images/instagram-logo.png', width: 18, height: 18, fit: BoxFit.contain),
               ),
             ),
           ),
@@ -343,21 +260,13 @@ class FooterSection extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Padding(
             padding: const EdgeInsets.all(2),
-            child: Image.asset(
-              'assets/images/instagram-logo.png',
-              width: 18,
-              height: 18,
-              fit: BoxFit.contain,
-            ),
+            child: Image.asset('assets/images/instagram-logo.png', width: 18, height: 18, fit: BoxFit.contain),
           ),
         ),
         const Spacer(),
         Text(
           '© 2025 Cebmed Health Tech. Données de santé sécurisées HDS.',
-          style: textTheme.bodyMedium?.copyWith(
-            color: const Color(0xFF8A8E9A),
-            fontWeight: FontWeight.w500,
-          ),
+          style: textTheme.bodyMedium?.copyWith(color: const Color(0xFF8A8E9A), fontWeight: FontWeight.w500),
         ),
         const Spacer(),
       ],
@@ -370,10 +279,7 @@ class FooterSection extends StatelessWidget {
       children: [
         Text(
           'S\'inscrire à la newsletter',
-          style: textTheme.bodyLarge?.copyWith(
-            color: AppTheme.black,
-            fontWeight: FontWeight.w700,
-          ),
+          style: textTheme.bodyLarge?.copyWith(color: AppTheme.black, fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 8),
         ConstrainedBox(
@@ -390,9 +296,10 @@ class FooterSection extends StatelessWidget {
                 const SizedBox(width: 14),
                 const Icon(Icons.mail_outline_rounded, size: 18, color: Color(0xFF8A8E9A)),
                 const SizedBox(width: 8),
-                const Expanded(
+                Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    controller: _newsletterController,
+                    decoration: const InputDecoration(
                       hintText: 'Votre adresse email',
                       border: InputBorder.none,
                       isDense: true,
@@ -402,13 +309,13 @@ class FooterSection extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 4),
                   child: FilledButton(
-                    onPressed: () {},
+                    onPressed: _newsletterViewModel.submitting ? null : _submitNewsletter,
                     style: FilledButton.styleFrom(
                       minimumSize: const Size(132, 38),
                       backgroundColor: AppTheme.primaryPink,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     ),
-                    child: const Text('S\'inscrire'),
+                    child: Text(_newsletterViewModel.submitting ? '...' : 'S\'inscrire'),
                   ),
                 ),
               ],
@@ -418,16 +325,14 @@ class FooterSection extends StatelessWidget {
       ],
     );
   }
+
   Widget _mobileNewsletter(TextTheme textTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'S\'inscrire à la newsletter',
-          style: textTheme.bodyLarge?.copyWith(
-            color: AppTheme.black,
-            fontWeight: FontWeight.w700,
-          ),
+          style: textTheme.bodyLarge?.copyWith(color: AppTheme.black, fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 8),
         SizedBox(
@@ -440,13 +345,14 @@ class FooterSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: const Color(0xFFE2E4EC)),
             ),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.mail_outline_rounded, size: 18, color: Color(0xFF8A8E9A)),
-                SizedBox(width: 8),
+                const Icon(Icons.mail_outline_rounded, size: 18, color: Color(0xFF8A8E9A)),
+                const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    controller: _newsletterController,
+                    decoration: const InputDecoration(
                       hintText: 'Votre adresse email',
                       border: InputBorder.none,
                       isDense: true,
@@ -461,13 +367,13 @@ class FooterSection extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: FilledButton(
-            onPressed: () {},
+            onPressed: _newsletterViewModel.submitting ? null : _submitNewsletter,
             style: FilledButton.styleFrom(
               backgroundColor: AppTheme.primaryPink,
               minimumSize: const Size.fromHeight(44),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
             ),
-            child: const Text('S\'inscrire'),
+            child: Text(_newsletterViewModel.submitting ? 'Inscription...' : 'S\'inscrire'),
           ),
         ),
       ],
@@ -503,4 +409,3 @@ class _FooterLink extends StatelessWidget {
     );
   }
 }
-
