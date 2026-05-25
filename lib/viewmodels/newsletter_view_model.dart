@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 import '../models/newsletter_request.dart';
 import '../services/newsletter_service.dart';
 
@@ -19,16 +19,23 @@ class NewsletterViewModel extends ChangeNotifier {
     return null;
   }
 
-  Future<String> submit(String email) async {
+  Future<String> submit(String email, bool acceptConditions) async {
     final validationError = validateEmail(email);
     if (validationError != null) return validationError;
+
+    if (!acceptConditions) {
+      return 'Veuillez accepter la politique de confidentialité.';
+    }
 
     _submitting = true;
     notifyListeners();
 
     try {
       final (statusCode, _) = await _service.subscribe(
-        NewsletterRequest(email: email.trim()),
+        NewsletterRequest(
+          email: email.trim(),
+          acceptConditions: acceptConditions,
+        ),
       );
 
       if (statusCode == 201) return 'Inscription newsletter réussie.';

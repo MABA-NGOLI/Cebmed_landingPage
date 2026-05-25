@@ -5,7 +5,7 @@ import '../models/newsletter_request.dart';
 
 class NewsletterService {
   static final Uri _newsletterUri = Uri.parse(
-    'http://31.207.35.91/cebmed/api/newsletter/subscribe',
+    'https://cebmed.duckdns.org/cebmed/api/newsletter/subscribe',
   );
 
   Future<(int, NewsletterModel?)> subscribe(NewsletterRequest request) async {

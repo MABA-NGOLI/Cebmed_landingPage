@@ -1,7 +1,12 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../viewmodels/newsletter_view_model.dart';
+import '../views/privacy_policy_view.dart';
+import '../views/legal_notices_view.dart';
+import '../views/data_security_view.dart';
+import '../views/support_view.dart';
 
 class FooterSection extends StatefulWidget {
   const FooterSection({super.key});
@@ -16,6 +21,7 @@ class _FooterSectionState extends State<FooterSection> {
 
   final TextEditingController _newsletterController = TextEditingController();
   late final NewsletterViewModel _newsletterViewModel;
+  bool _acceptConditions = false;
 
   @override
   void initState() {
@@ -52,15 +58,43 @@ class _FooterSectionState extends State<FooterSection> {
       );
     }
   }
+  void _openPrivacyPolicy(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => const PrivacyPolicyView(),
+      ),
+    );
+  }
 
-  void _onFooterLinkTap(BuildContext context, String label) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$label bientôt disponible.')),
+  void _openLegalNotices(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => const LegalNoticesView(),
+      ),
+    );
+  }
+
+  void _openDataSecurity(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => const DataSecurityView(),
+      ),
+    );
+  }
+
+  void _openSupport(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => const SupportView(),
+      ),
     );
   }
 
   Future<void> _submitNewsletter() async {
-    final message = await _newsletterViewModel.submit(_newsletterController.text);
+    final message = await _newsletterViewModel.submit(
+      _newsletterController.text,
+      _acceptConditions,
+    );
     if (!mounted) return;
     if (message == 'Inscription newsletter réussie.') {
       _newsletterController.clear();
@@ -164,10 +198,10 @@ class _FooterSectionState extends State<FooterSection> {
             spacing: 28,
             runSpacing: 10,
             children: [
-              _FooterLink(label: 'Confidentialité', onTap: () => _onFooterLinkTap(context, 'Confidentialité')),
-              _FooterLink(label: 'Mentions légales', onTap: () => _onFooterLinkTap(context, 'Mentions légales')),
-              _FooterLink(label: 'Sécurité des données', onTap: () => _onFooterLinkTap(context, 'Sécurité des données')),
-              _FooterLink(label: 'Support', onTap: () => _onFooterLinkTap(context, 'Support')),
+              _FooterLink(label: 'Politique de confidentialité', onTap: () => _openPrivacyPolicy(context)),
+              _FooterLink(label: 'Mentions légales', onTap: () => _openLegalNotices(context)),
+              _FooterLink(label: 'Sécurité des données', onTap: () => _openDataSecurity(context)),
+              _FooterLink(label: 'Support', onTap: () => _openSupport(context)),
             ],
           ),
         ),
@@ -212,13 +246,13 @@ class _FooterSectionState extends State<FooterSection> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _FooterLink(label: 'Confidentialité', onTap: () => _onFooterLinkTap(context, 'Confidentialité')),
+            _FooterLink(label: 'Politique de confidentialité', onTap: () => _openPrivacyPolicy(context)),
             const SizedBox(height: 6),
-            _FooterLink(label: 'Mentions légales', onTap: () => _onFooterLinkTap(context, 'Mentions légales')),
+            _FooterLink(label: 'Mentions légales', onTap: () => _openLegalNotices(context)),
             const SizedBox(height: 6),
-            _FooterLink(label: 'Sécurité des données', onTap: () => _onFooterLinkTap(context, 'Sécurité des données')),
+            _FooterLink(label: 'Sécurité des données', onTap: () => _openDataSecurity(context)),
             const SizedBox(height: 6),
-            _FooterLink(label: 'Support', onTap: () => _onFooterLinkTap(context, 'Support')),
+            _FooterLink(label: 'Support', onTap: () => _openSupport(context)),
           ],
         ),
       ],
@@ -306,19 +340,28 @@ class _FooterSectionState extends State<FooterSection> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: FilledButton(
-                    onPressed: _newsletterViewModel.submitting ? null : _submitNewsletter,
-                    style: FilledButton.styleFrom(
-                      minimumSize: const Size(132, 38),
-                      backgroundColor: AppTheme.primaryPink,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    ),
-                    child: Text(_newsletterViewModel.submitting ? '...' : 'S\'inscrire'),
-                  ),
-                ),
+                const SizedBox(width: 8),
               ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        _consentRow(textTheme),
+        const SizedBox(height: 10),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton(
+              onPressed: (_newsletterViewModel.submitting || !_acceptConditions)
+                  ? null
+                  : _submitNewsletter,
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.primaryPink,
+                minimumSize: const Size.fromHeight(44),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+              ),
+              child: Text(_newsletterViewModel.submitting ? 'Inscription...' : 'S\'inscrire'),
             ),
           ),
         ),
@@ -364,16 +407,67 @@ class _FooterSectionState extends State<FooterSection> {
           ),
         ),
         const SizedBox(height: 10),
+        _consentRow(textTheme),
+        const SizedBox(height: 10),
         SizedBox(
           width: double.infinity,
           child: FilledButton(
-            onPressed: _newsletterViewModel.submitting ? null : _submitNewsletter,
+            onPressed: (_newsletterViewModel.submitting || !_acceptConditions)
+                ? null
+                : _submitNewsletter,
             style: FilledButton.styleFrom(
               backgroundColor: AppTheme.primaryPink,
               minimumSize: const Size.fromHeight(44),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
             ),
             child: Text(_newsletterViewModel.submitting ? 'Inscription...' : 'S\'inscrire'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _consentRow(TextTheme textTheme) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Checkbox(
+          value: _acceptConditions,
+          onChanged: (value) {
+            setState(() {
+              _acceptConditions = value ?? false;
+            });
+          },
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          visualDensity: VisualDensity.compact,
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: TextSpan(
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFF4B4D59),
+                    height: 1.35,
+                  ),
+                  children: [
+                    const TextSpan(text: 'En cochant cette case, j\'accepte de recevoir la newsletter CEBMED par e-mail. J\'ai pris connaissance de la '),
+                    TextSpan(
+                      text: 'Politique de confidentialité',
+                      style: const TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => _openPrivacyPolicy(context),
+                    ),
+                    const TextSpan(text: ' et je peux retirer mon consentement à tout moment.'),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ],
@@ -409,3 +503,13 @@ class _FooterLink extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
