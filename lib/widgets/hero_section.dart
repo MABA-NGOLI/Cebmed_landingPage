@@ -24,6 +24,7 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 700;
+    final isTablet = width >= 700 && width < 1024;
 
     return Center(
       child: ConstrainedBox(
@@ -31,7 +32,7 @@ class HeroSection extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 18 : 24,
-            vertical: isMobile ? 30 : 28,
+            vertical: isMobile ? 42 : (isTablet ? 54 : 64),
           ),
           child: isMobile
               ? Column(

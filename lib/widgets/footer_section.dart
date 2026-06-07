@@ -116,7 +116,7 @@ class _FooterSectionState extends State<FooterSection> {
           color: AppTheme.white,
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 18 : 24,
-            vertical: isMobile ? 34 : 28,
+            vertical: isMobile ? 42 : 50,
           ),
           child: Center(
             child: ConstrainedBox(

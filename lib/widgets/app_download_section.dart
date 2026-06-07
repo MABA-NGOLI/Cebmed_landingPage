@@ -25,7 +25,7 @@ class AppDownloadSection extends StatelessWidget {
           color: const Color(0xFFF7F7F8),
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 16 : 20,
-            vertical: isMobile ? 34 : 28,
+            vertical: isMobile ? 46 : (isTablet ? 58 : 66),
           ),
           child: Center(
             child: ConstrainedBox(
@@ -33,7 +33,7 @@ class AppDownloadSection extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(
-                  isMobile ? 14 : (isTablet ? 20 : 28),
+                  isMobile ? 0 : 0,
                   isMobile ? 20 : (isTablet ? 24 : 28),
                   isMobile ? 14 : (isTablet ? 20 : 28),
                   0,
@@ -96,10 +96,13 @@ class AppDownloadSection extends StatelessWidget {
               flex: 3,
               child: Align(
                 alignment: Alignment.bottomLeft,
-                child: Image.asset(
-                  'assets/images/logo_two.png',
-                  width: logoTwoWidth,
-                  fit: BoxFit.contain,
+                child: Transform.translate(
+                  offset: const Offset(-8, 0),
+                  child: Image.asset(
+                    'assets/images/logo_two.png',
+                    width: logoTwoWidth,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
@@ -132,10 +135,13 @@ class AppDownloadSection extends StatelessWidget {
               flex: 3,
               child: Align(
                 alignment: Alignment.bottomRight,
-                child: Image.asset(
-                  'assets/images/App_Cebmed.png',
-                  height: phoneHeight,
-                  fit: BoxFit.contain,
+                child: Transform.translate(
+                  offset: const Offset(8, 0),
+                  child: Image.asset(
+                    'assets/images/App_Cebmed.png',
+                    height: phoneHeight,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
@@ -198,20 +204,26 @@ class AppDownloadSection extends StatelessWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.bottomLeft,
-                child: Image.asset(
-                  'assets/images/logo_two.png',
-                  width: logoWidth,
-                  fit: BoxFit.contain,
+                child: Transform.translate(
+                  offset: const Offset(-8, 0),
+                  child: Image.asset(
+                    'assets/images/logo_two.png',
+                    width: logoWidth,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomRight,
-                child: Image.asset(
-                  'assets/images/App_Cebmed.png',
-                  height: phoneHeight,
-                  fit: BoxFit.contain,
+                child: Transform.translate(
+                  offset: const Offset(8, 0),
+                  child: Image.asset(
+                    'assets/images/App_Cebmed.png',
+                    height: phoneHeight,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),

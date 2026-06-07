@@ -18,7 +18,7 @@ class AssistantSection extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 18 : 28,
-            vertical: isMobile ? 38 : 40,
+            vertical: isMobile ? 48 : (isTablet ? 62 : 74),
           ),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -33,9 +33,9 @@ class AssistantSection extends StatelessWidget {
               child: Column(
                 children: [
                   _introBlock(context, isMobile, isTablet, mobileVisualWidth),
-                  SizedBox(height: isMobile ? 30 : 34),
+                  SizedBox(height: isMobile ? 52 : 76),
                   _secondBlock(context, isMobile, isTablet, mobileVisualWidth, mobileVisualHeight),
-                  SizedBox(height: isMobile ? 34 : 40),
+                  SizedBox(height: isMobile ? 56 : 84),
                   _thirdBlock(context, isMobile, isTablet, mobileVisualWidth, mobileVisualHeight),
                 ],
               ),

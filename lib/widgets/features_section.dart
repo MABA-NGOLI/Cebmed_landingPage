@@ -14,7 +14,10 @@ class FeaturesSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: AppTheme.primaryBlue.withValues(alpha: 0.35),
-      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 18, vertical: isMobile ? 36 : 28),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16 : 18,
+        vertical: isMobile ? 44 : (isTablet ? 54 : 64),
+      ),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1320),
@@ -29,7 +32,7 @@ class FeaturesSection extends StatelessWidget {
                   fontSize: isMobile ? 30 : (isTablet ? 30 : 36),
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 18),
               Text(
                 'Une approche centrée sur l\'humain pour vous accompagner sereinement dans votre parcours de soin.',
                 textAlign: TextAlign.center,
@@ -39,7 +42,7 @@ class FeaturesSection extends StatelessWidget {
                   fontSize: isMobile ? 13 : 16,
                 ),
               ),
-              SizedBox(height: isMobile ? 24 : 28),
+              SizedBox(height: isMobile ? 30 : 42),
               LayoutBuilder(
                 builder: (context, constraints) {
                   final w = constraints.maxWidth;

@@ -33,7 +33,7 @@ class SocialSection extends StatelessWidget {
           color: const Color(0xFFF7F7F8),
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 18 : (isTablet ? 24 : 32),
-            vertical: isMobile ? 36 : (isTablet ? 30 : 40),
+            vertical: isMobile ? 46 : (isTablet ? 58 : 66),
           ),
           child: Center(
             child: ConstrainedBox(

@@ -10,13 +10,14 @@ class PricingSection extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 800;
     final isCompact = width < 560;
+    final isTablet = width >= 800 && width < 1100;
 
     return Container(
       width: double.infinity,
       color: const Color(0xFFC9D5EA),
       padding: EdgeInsets.symmetric(
         horizontal: isCompact ? 12 : (isMobile ? 16 : 24),
-        vertical: isCompact ? 24 : (isMobile ? 38 : 34),
+        vertical: isCompact ? 38 : (isMobile ? 48 : (isTablet ? 58 : 66)),
       ),
       child: Center(
         child: ConstrainedBox(
@@ -32,7 +33,7 @@ class PricingSection extends StatelessWidget {
                   fontSize: isMobile ? 30 : 44,
                 ),
               ),
-              SizedBox(height: isMobile ? 24 : 28),
+              SizedBox(height: isMobile ? 30 : 40),
               if (isMobile)
                 Center(
                   child: ConstrainedBox(
