@@ -65,7 +65,7 @@ class TopNavigation extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _menuItem(context, 'Fonctionnalités test', onFeaturesTap),
+                    _menuItem(context, 'Fonctionnalités', onFeaturesTap),
                     const SizedBox(width: 26),
                     _menuItem(context, 'Abonnement', onPricingTap),
                     const SizedBox(width: 26),
