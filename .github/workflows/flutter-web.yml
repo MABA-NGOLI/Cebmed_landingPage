@@ -3,7 +3,7 @@ name: Flutter Web CI/CD
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   build-and-deploy:
@@ -27,5 +27,11 @@ jobs:
       - name: Build web app
         run: flutter build web
 
-      - name: Trigger Vercel Deployment
-        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        run: vercel deploy build/web --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
